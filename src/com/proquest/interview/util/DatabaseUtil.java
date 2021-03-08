@@ -1,9 +1,6 @@
 package com.proquest.interview.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * This class is just a utility class, you should not have to change anything here
@@ -27,5 +24,29 @@ public class DatabaseUtil {
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.hsqldb.jdbcDriver");
 		return DriverManager.getConnection("jdbc:hsqldb:mem", "sa", "");
+	}
+
+	public static void clear(ResultSet resultSet, Statement statement, Connection connection) {
+		if (resultSet != null) {
+			try {
+				resultSet.close();
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			}
+		}
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			}
+		}
+		if (connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			}
+		}
 	}
 }
